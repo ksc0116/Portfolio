@@ -36,11 +36,6 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            Manager.instance.camera_Manager.OnShakeCameraPosition(2f, 0.1f);
-        }
-
         if (Manager.instance.equip_Manager.isWeaponEquip == true)
         {
             playerWeapon.SetActive(true);
@@ -99,6 +94,11 @@ public class PlayerController : MonoBehaviour
         {
             isMove = false;
             anim.SetBool("isMove", isMove);
+        }
+        else
+        {
+            isMove=true;
+            anim.SetBool("isMove",isMove);
         }
     }
 

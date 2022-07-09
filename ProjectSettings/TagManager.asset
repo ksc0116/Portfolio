@@ -8,6 +8,8 @@ TagManager:
   - PlayerAttackCollider
   - FxTemporaire
   - ExpDrop
+  - Boss
+  - BossTrigger
   layers:
   - Default
   - TransparentFX
@@ -17,9 +19,9 @@ TagManager:
   - UI
   - FieldItem
   - TouchEffect
-  - 
-  - 
-  - 
+  - BossGround
+  - Boss
+  - Player
   - 
   - 
   - 
