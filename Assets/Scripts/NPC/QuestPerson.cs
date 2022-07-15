@@ -23,6 +23,7 @@ public class QuestPerson : MonoBehaviour
             acceptText.text = "";
             return;
         }
+
         ChangeText();
     }
 
@@ -33,7 +34,7 @@ public class QuestPerson : MonoBehaviour
             acceptText.text = "!";
             acceptText.color = Color.yellow;
         }
-        else
+        else if(Manager.instance.quest_Manager.isClear == false)
         {
             acceptText.text = "?";
 
@@ -41,7 +42,7 @@ public class QuestPerson : MonoBehaviour
             {
                 acceptText.color = Color.gray;
             }
-            else
+            else if(Manager.instance.quest_Manager.isAccept == false)
             {
                 acceptText.color = Color.yellow;
             }
@@ -67,9 +68,14 @@ public class QuestPerson : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            talkTextObj.SetActive(true);
+            if (Manager.instance.quest_Manager.isTalk == false)
+            {
+                talkTextObj.SetActive(true);
+            }
             if (Input.GetKeyDown(KeyCode.G))
             {
+                Manager.instance.quest_Manager.isTalk = true;
+                Manager.instance.playerStat_Manager.isMoveAble = false;
                 Manager.instance.camera_Manager.ChangeCamera(inCamera);
                 questPanel.SetActive(true);
             }

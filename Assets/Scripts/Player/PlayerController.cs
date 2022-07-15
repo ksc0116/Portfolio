@@ -6,6 +6,13 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] GameObject mainMenuPanel;
+    [SerializeField] GameObject backGroundPanel;
+    [SerializeField] GameObject pausePanel;
+
+    [SerializeField] BoxCollider attackCollider;
+    [SerializeField] BoxCollider skillCollider;
+
     [SerializeField] GameObject expGetEffect;
 
     [SerializeField] GameObject playerWeapon;
@@ -26,6 +33,11 @@ public class PlayerController : MonoBehaviour
     public bool isMove=false;
     RaycastHit hit;
 
+    private void OnEnable()
+    {
+        attackCollider.enabled=false;
+        skillCollider.enabled = false;
+    }
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -46,7 +58,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // 클릭한 곳으로 이동하기
-        if (Input.GetMouseButton(1) && playerAnim.isAttack==false && EventSystem.current.IsPointerOverGameObject()==false)
+        if (Input.GetMouseButton(1) && playerAnim.isAttack==false && EventSystem.current.IsPointerOverGameObject()==false && Manager.instance.playerStat_Manager.isMoveAble==true)
         {
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity ,layerMask))
             {
@@ -61,7 +73,7 @@ public class PlayerController : MonoBehaviour
         LookMoveDirection();
 
         // 공격하기
-        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false && Manager.instance.equip_Manager.isWeaponEquip==true)
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false && Manager.instance.equip_Manager.isWeaponEquip==true && Manager.instance.playerStat_Manager.isAttackAble==true)
         {
             anim.SetTrigger("onAttack");
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit))
@@ -84,6 +96,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             OnOffFrame(statAndEquipFrame);
+        }
+
+        // 일시정지창 OnOff
+        if (Input.GetKeyDown(KeyCode.Escape) && mainMenuPanel.activeSelf==false)
+        {
+            OnOffFrame(pausePanel);
+            OnOffFrame(backGroundPanel);
         }
     }
 
@@ -154,7 +173,6 @@ public class PlayerController : MonoBehaviour
         {
             if (other.GetComponent<EXP_Drop>().isFollow == true)
             {
-                Debug.Log("획득");
                 StopCoroutine(ExpGet());
                 StartCoroutine(ExpGet());
             }

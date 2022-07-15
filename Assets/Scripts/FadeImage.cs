@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FadeImage : MonoBehaviour
 {
     Image fadeImage;
-    float fadeTime=2f;
+    float fadeTime=2.5f;
 
     private void Awake()
     {

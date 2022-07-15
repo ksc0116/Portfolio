@@ -736,6 +736,7 @@ GameObject:
   - component: {fileID: 6709694974194516319}
   - component: {fileID: 1634218626587973345}
   - component: {fileID: 5745628276764185346}
+  - component: {fileID: -7779273595096967512}
   m_Layer: 0
   m_Name: TurtleShell
   m_TagString: Untagged
@@ -872,6 +873,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 9077752526840451200, guid: cfb7885d7340e6f47865c33865f270cb, type: 3}
+--- !u!114 &-7779273595096967512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5769731278103152918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2be56fa6463125c45aae06015d6a4518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpPotion: {fileID: 6276307088936480803, guid: b7e2bcca2c5759142adbf66a3f0a42d7, type: 3}
+  mpPotion: {fileID: 8185499030956831932, guid: 887c3e7b3a95c7940acd6b72c68e0064, type: 3}
 --- !u!1 &5769755067414792100
 GameObject:
   m_ObjectHideFlags: 0

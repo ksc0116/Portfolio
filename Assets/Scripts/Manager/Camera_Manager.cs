@@ -1,20 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Camera_Manager : MonoBehaviour
 {
     [Header("BossSceneCamera")]
     [SerializeField] Vector3 forwardPosition;
     [SerializeField] Vector3 forwardRotation;
+    public bool isBossScene = false;
 
     [Header("BossScene")]
     [SerializeField] GameObject boss;
     [SerializeField] GameObject dustPrefab;
     [SerializeField] HightLightEffect highLightEffect;
     [SerializeField] GameObject dangerText;
+    [SerializeField] GameObject earthQuakePrefab;
+    [SerializeField] Animator bossAnim;
+    [SerializeField] GameObject bossHpBar;
     public bool isBossDrop = false;
     public bool isTrigger = false;
+    public bool isBossMove=false;
     bool isFirst = false;
     bool isArrive = false;
 
@@ -31,6 +37,8 @@ public class Camera_Manager : MonoBehaviour
 
     float shakeTime;
     float shakeIntensity;
+
+    public bool isEvent = false;
     private void Awake()
     {
         cam = Camera.main;
@@ -41,11 +49,15 @@ public class Camera_Manager : MonoBehaviour
 
     public IEnumerator BossInCamera(GameObject inCamera, Transform p_BossTransform, Vector3 p_BossAfterPos)
     {
+        isEvent = true;
+
         inCamera.SetActive(true);
 
         Vector3 startRotation = inCamera.transform.eulerAngles;
 
         float power = 10f;
+
+        Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.bossDownClip);
 
         while (Vector3.Distance(p_BossTransform.position, p_BossAfterPos) > 0.1f)
         {
@@ -70,18 +82,28 @@ public class Camera_Manager : MonoBehaviour
 
             yield return null;
         }
+        Manager.instance.sound_Manager.sfxAudioSource.Stop();
+        Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.bossSkillClip);
         isArrive = true;
-        Manager.instance.camera_Manager.OnShakeCameraPosition(2f, 1f);
+        Instantiate(earthQuakePrefab, p_BossTransform.position, Quaternion.identity);
+        Manager.instance.camera_Manager.OnShakeCameraPosition(1.3f, 1f);
         GameObject dust = Instantiate(dustPrefab,p_BossTransform.position,Quaternion.identity);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.3f);
+        bossAnim.SetTrigger("onLand");
+
+        yield return new WaitForSeconds(5f);
 
         StartCoroutine( highLightEffect.EffectOff() );
+        bossHpBar.SetActive(true);
+        Manager.instance.playerStat_Manager.isMoveAble = true;
+        Manager.instance.playerStat_Manager.player.GetComponent<NavMeshAgent>().speed = 3.5f;
+        isBossMove = true;
 
-        yield return new WaitForSeconds(0.5f);
-        Destroy(dust);
+        isEvent = false;
     }
     IEnumerator LookBoss()
     {
+        isEvent = true;
         while (isArrive == false)
         {
             Quaternion q_hp = Quaternion.LookRotation(boss.transform.position  - cam.transform.position);
@@ -90,13 +112,17 @@ public class Camera_Manager : MonoBehaviour
 
             yield return null;
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(5f);
         cam.transform.localPosition = camOriginPosition;
         cam.transform.localRotation = camOriginRotation;
+        isEvent = false;
     }
 
     public IEnumerator MainCameraMoveInBoss()
     {
+        isEvent = true;
+
+        yield return new WaitForSeconds(0.3f);
         float currentTime = 0.0f;
         float percent = 0.0f;
 
@@ -111,29 +137,38 @@ public class Camera_Manager : MonoBehaviour
 
             yield return null;
         }
+        yield return new WaitForSeconds(2f);
+        Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.dangerClip);
         dangerText.SetActive(true);
         yield return new WaitForSeconds(2f);
 
         Vector3 startPos = cam.transform.position;
         shakeTime = 2f;
         shakeIntensity = 0.1f;
+        Manager.instance.sound_Manager.sfxAudioSource.Stop();
+        Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.rockDownClip);
         while (shakeTime > 0.0f)
         {
             cam.transform.position = startPos + Random.insideUnitSphere * shakeIntensity;
             shakeTime -= Time.deltaTime;
             yield return null;
         }
+        Manager.instance.sound_Manager.sfxAudioSource.Stop();
         isBossDrop = true;
 
         dangerText.SetActive(false);
 
+
         cam.transform.localPosition = camOriginPosition;
         cam.transform.localRotation = camOriginRotation;
+        isEvent = false;
     }
 
     // ================================================================================================
     public IEnumerator MainCameraMove(Transform p_targetPosition)
     {
+        isEvent = true;
+
         cam.transform.SetParent(p_targetPosition.parent);
 
         playerObject.SetActive(false);
@@ -152,11 +187,13 @@ public class Camera_Manager : MonoBehaviour
             yield return null;
         }
 
+
         playerObject.SetActive(true);
 
         cam.transform.SetParent(camOriginParent);
         cam.transform.localPosition=camOriginPosition;
         cam.transform.localRotation=camOriginRotation;
+        isEvent = false;
     }
 
     public void ChangeCamera(GameObject p_onObject)
@@ -185,6 +222,8 @@ public class Camera_Manager : MonoBehaviour
 
     IEnumerator ShakeByPosition()
     {
+        isEvent = true;
+
         Vector3 startPos=cam.transform.position;
         while (shakeTime > 0.0f)
         {
@@ -192,7 +231,7 @@ public class Camera_Manager : MonoBehaviour
             shakeTime-=Time.deltaTime;
             yield return null;
         }
-
         cam.transform.localPosition = camOriginPosition;
+        isEvent = false;
     }
 }

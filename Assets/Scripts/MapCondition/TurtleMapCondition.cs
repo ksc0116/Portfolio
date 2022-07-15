@@ -12,21 +12,19 @@ public class TurtleMapCondition : MonoBehaviour
 
     private void Update()
     {
-        if (isFirst == false)
+        if (Manager.instance.quest_Manager.isFirstEvent == false)
         {
-            if (Manager.instance.quest_Manager.dieTurtleShellCnt == spawner.spawnPoint.Length)
+            if (isFirst == false)
             {
-                isFirst = true;
-                StartCoroutine(MapClear());
-                //Manager.instance.camera_Manager.ChangeCamera(inCamera);
-                //for (int i = 0; i < destroyObj.Length; i++)
-                //{
-                //    Manager.instance.disable_Manager.DestroyParticle(destroyObj[i].transform);
-                //    Manager.instance.disable_Manager.DestroyObject(destroyObj[i]);
-                //}
-                //Manager.instance.camera_Manager.OnMainCamera(inCamera);
+                if (Manager.instance.quest_Manager.dieTurtleShellCnt == spawner.spawnPoint.Length)
+                {
+                    Manager.instance.quest_Manager.isFirstEvent = true;
+                    isFirst = true;
+                    StartCoroutine(MapClear());
+                }
             }
         }
+
 
     }
     IEnumerator MapClear()

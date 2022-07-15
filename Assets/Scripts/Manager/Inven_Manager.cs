@@ -20,6 +20,7 @@ public class Inven_Manager : MonoBehaviour
 
     public void GetItem(ItemInfo p_itemInfo)
     {
+        // 퀵슬롯에 이미 있을 경우
         for(int i = 0; i < q_slots.Length; i++)
         {
             if (q_slots[i].GetChild(1).gameObject.activeSelf == false)
@@ -30,42 +31,60 @@ public class Inven_Manager : MonoBehaviour
             {
                 if (q_slots[i].GetChild(1).GetComponent<Image>().sprite == p_itemInfo.itemSprite)
                 {
-                    p_itemInfo.cnt++;
-                    q_slots[i].GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = p_itemInfo.cnt.ToString();
+                    q_slots[i].GetChild(1).GetComponent<Item_Action>().m_itemInfo.Cnt++;
+                    //p_itemInfo.cnt++;
+                    q_slots[i].GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = q_slots[i].GetChild(1).GetComponent<Item_Action>().m_itemInfo.Cnt.ToString();
                     return;
                 }
             }
         }
 
-
-        for(int i=0;i<slots.Length;i++)
+        // 인벤토리에 이미 있을 경우
+        for(int i = 0; i < slots.Length; i++)
         {
             if (slots[i].GetChild(0).gameObject.activeSelf == false)
             {
-
-
-                slots[i].GetChild(0).GetComponent<Image>().sprite = p_itemInfo.itemSprite;
-                slots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo = p_itemInfo;
-                slots[i].GetChild(0).gameObject.SetActive(true);
-                if (Manager.instance.quest_Manager.questIndex == 0)
-                {
-                    if (p_itemInfo.itemSprite.name=="sword")
-                    {
-                        Manager.instance.quest_Manager.swordCnt=1;
-                        Manager.instance.quest_Manager.UpdateCurQuestText();
-                    }
-                }
-                return;
+                continue;
             }
             else if (slots[i].GetChild(0).gameObject.activeSelf == true)
             {
                 if (slots[i].GetChild(0).GetComponent<Image>().sprite == p_itemInfo.itemSprite)
                 {
-                    p_itemInfo.cnt++;
-                    slots[i].GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text=p_itemInfo.cnt.ToString();
+                    slots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo.Cnt++;
+                    //p_itemInfo.cnt++;
+                    slots[i].GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = slots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo.Cnt.ToString();
                     return;
                 }
             }
+        }
+
+        for(int i=0;i<slots.Length;i++)
+        {
+            if (slots[i].GetChild(0).gameObject.activeSelf == false)
+            {
+                p_itemInfo.Cnt = 1;
+                slots[i].GetChild(0).GetComponent<Image>().sprite = p_itemInfo.itemSprite;
+                slots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo = p_itemInfo;
+                slots[i].GetChild(0).gameObject.SetActive(true);
+                Manager.instance.invenSlot_Manager.invenSlots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo = p_itemInfo;
+                if (Manager.instance.quest_Manager.questIndex == 0)
+                {
+                    if (p_itemInfo.itemSprite.name=="sword")
+                    {
+                        Manager.instance.quest_Manager.swordCnt=1;
+                    }
+                }
+                return;
+            }
+            //else if (slots[i].GetChild(0).gameObject.activeSelf == true)
+            //{
+            //    if (slots[i].GetChild(0).GetComponent<Image>().sprite == p_itemInfo.itemSprite)
+            //    {
+            //        p_itemInfo.cnt++;
+            //        slots[i].GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text=p_itemInfo.cnt.ToString();
+            //        return;
+            //    }
+            //}
         }
     }
 }

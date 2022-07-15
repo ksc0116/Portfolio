@@ -30,6 +30,8 @@ public class StoreFrame : MonoBehaviour
 
     public void ExitButton()
     {
+        Manager.instance.quest_Manager.isTalk = false;
+        Manager.instance.playerStat_Manager.isMoveAble = true;
         gameObject.SetActive(false);
         invenObj.SetActive(false);
         Manager.instance.camera_Manager.OnMainCamera(inCamera);

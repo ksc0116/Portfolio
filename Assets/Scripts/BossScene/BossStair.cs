@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class BossStair : MonoBehaviour
 {
-
-    private void OnTriggerExit(Collider other)
+    [SerializeField] GameObject explosionPrefab;
+    private void OnTriggerEnter(Collider other)
     {
-
+        if (other.tag == "BridgeDestroyCollider")
+        {
+            Instantiate(explosionPrefab,transform.position,Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }

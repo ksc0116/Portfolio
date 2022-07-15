@@ -13,6 +13,11 @@ public class Manager : MonoBehaviour
     public Camera_Manager camera_Manager;
     public Quest_Manager quest_Manager;
     public Disable_Manager disable_Manager;
+    public Sound_Manager sound_Manager;
+    public QuickSlot_Manager quickSlot_Manager;
+    public InvenSlot_Manager invenSlot_Manager;
+    public Json_Manager json_Manager;
+    public EquipSlot_Manager equipSlot_Manager;
     private void Awake()
     {
         if(instance != this)

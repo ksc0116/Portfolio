@@ -35,9 +35,14 @@ public class SalesPerson : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            talkTextObj.SetActive(true);
+            if (Manager.instance.quest_Manager.isTalk == false)
+            {
+                talkTextObj.SetActive(true);
+            }
             if (Input.GetKeyDown(KeyCode.G))
             {
+                Manager.instance.quest_Manager.isTalk = true;
+                Manager.instance.playerStat_Manager.isMoveAble = false;
                 marketObj.SetActive(true);
                 invenObj.SetActive(true);
                 Manager.instance.camera_Manager.ChangeCamera(inCamera);

@@ -12,7 +12,7 @@ public class DamageText : MonoBehaviour
     float alphaSpeed = 2f;
 
     TextMeshPro textMesh;
-    Color color=Color.white;
+    Color color=Color.red;
 
     private void Awake()
     {

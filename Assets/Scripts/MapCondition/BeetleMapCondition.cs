@@ -14,12 +14,16 @@ public class BeetleMapCondition : MonoBehaviour
 
     private void Update()
     {
-        if (isFirst == false)
+        if (Manager.instance.quest_Manager.isSecEvent == false)
         {
-            if (beetles.Length == Manager.instance.quest_Manager.dieBeetleCnt)
+            if (isFirst == false)
             {
-                isFirst = true;
-                StartCoroutine(MapClear());
+                if (beetles.Length == Manager.instance.quest_Manager.dieBeetleCnt)
+                {
+                    Manager.instance.quest_Manager.isSecEvent = true;
+                    isFirst = true;
+                    StartCoroutine(MapClear());
+                }
             }
         }
     }

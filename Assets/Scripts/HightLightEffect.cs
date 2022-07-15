@@ -17,7 +17,9 @@ public class HightLightEffect : MonoBehaviour
         {
             effectAnim[i].SetTrigger("onOff");
         }
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        Manager.instance.sound_Manager.ChangeBGM(Manager.instance.sound_Manager.bossBGM);
+        yield return new WaitForSeconds(1f);
         curQuestPanel.SetActive(true);
         gameObject.SetActive(false);
     }

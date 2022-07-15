@@ -856,15 +856,22 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9863014
-        functionName: AttackEnd
+      - time: 0.35616237
+        functionName: PlaySFX
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 8300000, guid: d44afbb92c38fdc4db7d0e501408a29d, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.4705883
         functionName: ActionOnOffAttackCollider
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9863014
+        functionName: AttackEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -1169,6 +1176,13 @@ ModelImporter:
         functionName: ActionOnOffAttackCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.020408215
+        functionName: PlaySFX
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: d44afbb92c38fdc4db7d0e501408a29d, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -1551,6 +1565,13 @@ ModelImporter:
         functionName: ActionOnOffAttackCollider
         data: 
         objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.12244898
+        functionName: PlaySFX
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: d44afbb92c38fdc4db7d0e501408a29d, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

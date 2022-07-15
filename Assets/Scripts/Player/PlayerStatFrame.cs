@@ -18,7 +18,7 @@ public class PlayerStatFrame : MonoBehaviour
         {
             levText.text = Manager.instance.playerStat_Manager.lev.ToString();
             expText.text = Manager.instance.playerStat_Manager.curExp.ToString()+" %";
-            atkText.text = (Manager.instance.playerStat_Manager.atk+ Manager.instance.playerStat_Manager.atk_Bonus).ToString();
+            atkText.text = Manager.instance.playerStat_Manager.atk.ToString();
             defText.text = (Manager.instance.playerStat_Manager.def + Manager.instance.playerStat_Manager.def_Bonus).ToString();
         }
     }

@@ -37,9 +37,12 @@ public class TurtleShell : MonoBehaviour
     Transform expOriginParent;
 
     DamageTextMemoryPool damageTextMemoryPool;
+
+    DropItemMemoryPool dropItemMemoryPool;
     private void Awake()
     {
-        expDropMemoryPool=GetComponent<ExpDropMemoryPool>();
+        dropItemMemoryPool=GetComponent<DropItemMemoryPool>();
+        expDropMemoryPool =GetComponent<ExpDropMemoryPool>();
         damageTextMemoryPool=GetComponent<DamageTextMemoryPool>();
         cam =Camera.main;
         isDie = false;
@@ -221,10 +224,14 @@ public class TurtleShell : MonoBehaviour
     IEnumerator Die()
     {
         Manager.instance.quest_Manager.dieTurtleShellCnt++;
-        Manager.instance.quest_Manager.UpdateCurQuestText();
 
         isDie = true;
         anim.SetTrigger("onDie");
+        int rand = Random.Range(0, 100);
+        if (rand <= 90)
+        {
+            dropItemMemoryPool.SpawnItem(transform.position);
+        }
         expDropMemoryPool.SpawnExpDrop(target, m_exp,expOriginParent,gameObject);
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
@@ -233,6 +240,8 @@ public class TurtleShell : MonoBehaviour
     void TakeDamage(float damage)
     {
         if (isDie == true) return;
+
+        Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.enemyDamageClip);
 
         damageTextMemoryPool.SpawnDamageText(transform.position,damage,1.2f);
 
@@ -268,8 +277,21 @@ public class TurtleShell : MonoBehaviour
     {
         if (other.tag == "PlayerAttackCollider")
         {
+            if (Manager.instance.playerStat_Manager.isQSkill == true)
+            {
+                TakeDamage(Manager.instance.playerStat_Manager.qSkillDamage);
+            }
+            else
+            {
+                TakeDamage(Manager.instance.playerStat_Manager.wSkillDamage);
+            }
+        }
+
+        if(other.tag == "PlayerNormalAttack")
+        {
             TakeDamage(Manager.instance.playerStat_Manager.atk);
         }
+
         if (attackCollider.enabled == true)
         {
             if (other.tag == "Player")

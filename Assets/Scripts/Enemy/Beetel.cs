@@ -33,12 +33,14 @@ public class Beetel : MonoBehaviour
     SkinnedMeshRenderer skinnedMeshRenderer;
 
     ExpDropMemoryPool m_pool;
+    DropItemMemoryPool dropItemMemoryPool;
     public Transform expOriginParent;
 
     DamageTextMemoryPool damageTextMemoryPool;
     private void Awake()
     {
-        m_pool=GetComponent<ExpDropMemoryPool>();
+        dropItemMemoryPool=GetComponent<DropItemMemoryPool>();
+        m_pool =GetComponent<ExpDropMemoryPool>();
         damageTextMemoryPool=GetComponent<DamageTextMemoryPool>();
         cam = Camera.main;
         isDie = false;
@@ -173,6 +175,9 @@ public class Beetel : MonoBehaviour
     void TakeDamage(float damage)
     {
         if (isDie == true) return;
+
+        Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.enemyDamageClip);
+
         hpBar.gameObject.SetActive(true);
         curHp-=damage;
         damageTextMemoryPool.SpawnDamageText(transform.position,damage,1.8f);
@@ -185,11 +190,15 @@ public class Beetel : MonoBehaviour
     IEnumerator Die()
     {
         Manager.instance.quest_Manager.dieBeetleCnt++;
-        Manager.instance.quest_Manager.UpdateCurQuestText();
 
         isDie = true;
         anim.SetTrigger("onDie");
         m_pool.SpawnExpDrop(target, m_exp,expOriginParent,gameObject);
+        int rand = Random.Range(0, 100);
+        if (rand <= 90)
+        {
+            dropItemMemoryPool.SpawnItem(transform.position);
+        }
 
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
@@ -204,6 +213,18 @@ public class Beetel : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "PlayerAttackCollider")
+        {
+            if (Manager.instance.playerStat_Manager.isQSkill == true)
+            {
+                TakeDamage(Manager.instance.playerStat_Manager.qSkillDamage);
+            }
+            else
+            {
+                TakeDamage(Manager.instance.playerStat_Manager.wSkillDamage);
+            }
+        }
+
+        if (other.tag == "PlayerNormalAttack")
         {
             TakeDamage(Manager.instance.playerStat_Manager.atk);
         }

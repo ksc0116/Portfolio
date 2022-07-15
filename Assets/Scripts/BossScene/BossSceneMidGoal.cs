@@ -24,4 +24,13 @@ public class BossSceneMidGoal : MonoBehaviour
         }
 
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            GetComponent<BoxCollider>().isTrigger = false;
+            GetComponent<BoxCollider>().size = Vector3.one;
+            GetComponent<BoxCollider>().center = new Vector3(0, -0.5f, 0);
+        }
+    }
 }

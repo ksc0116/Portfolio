@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum ItemKind { Weapon = 0, Potion }
+[System.Serializable]
 public class ItemInfo : MonoBehaviour
 {
     public ItemKind itemKind;
@@ -11,7 +12,8 @@ public class ItemInfo : MonoBehaviour
     public int itemNum;
 
     public Sprite itemSprite;
-    public int cnt = 1;
+    int cnt = 1;
+    public int Cnt { get { return cnt; } set { cnt = value; } }
 
     public float atkBonus;
     public float defBonus;

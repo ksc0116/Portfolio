@@ -19,7 +19,7 @@ public class DamageTextMemoryPool : MonoBehaviour
         GameObject clone = m_pool.ActivePoolItem();
         clone.GetComponent<DamageText>().Init(m_pool);
         clone.transform.localScale = Vector3.one;   
-        clone.GetComponent<TextMeshPro>().text=damage.ToString();
+        clone.GetComponent<TextMeshPro>().text=$"-{damage}";
         //clone.transform.parent = transform;
         clone.transform.position = position + new Vector3(0, height, 0);
         clone.transform.rotation=Quaternion.identity;

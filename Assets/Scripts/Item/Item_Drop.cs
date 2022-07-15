@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Item_Drop : MonoBehaviour, IPointerEnterHandler,IDropHandler
 {
+    public int slotIndex;
     public bool inInven;
     public bool inQuick;
     public bool inEquip;
