@@ -48,6 +48,8 @@ public class SalesPerson : MonoBehaviour
                 Manager.instance.camera_Manager.ChangeCamera(inCamera);
             }
         }
+
+
     }
     private void OnTriggerExit(Collider other)
     {

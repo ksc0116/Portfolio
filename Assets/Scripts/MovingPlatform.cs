@@ -33,7 +33,6 @@ public class MovingPlatform : MonoBehaviour
             }
             else
             {
-                Debug.Log("°è¼Ó");
                 playerTransform.parent = null;
                 playerTransform.localPosition=transform.position;
                 playerTransform.GetComponent<NavMeshAgent>().SetDestination(transform.position);
@@ -52,8 +51,6 @@ public class MovingPlatform : MonoBehaviour
             Debug.Log(other.name);
             playerTransform.SetParent(transform);
             touchEffect.SetParent(transform);
-
-            Debug.Log("µé¾î¿È");
         }
     }
     private void OnTriggerExit(Collider other)
