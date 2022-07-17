@@ -264,6 +264,11 @@ public class Quest_Manager : MonoBehaviour
 
         cur_questTitle.text = "";
         cur_questTarget.text = "";
+        if (questIndex == 2)
+        {
+            Manager.instance.camera_Manager.isGameClear = true;
+            GameClear();
+        }
     }
 
     public void BackButton()
@@ -275,7 +280,10 @@ public class Quest_Manager : MonoBehaviour
         questPanel.SetActive(false);
         talkText.SetActive(false);
     }
-
+    void GameClear()
+    {
+        StartCoroutine(Manager.instance.camera_Manager.ClearCamera());
+    }
 
 
     //private void Update()

@@ -1575,6 +1575,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.14611872
+        functionName: ThirdAttackEffect
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: d44afbb92c38fdc4db7d0e501408a29d, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

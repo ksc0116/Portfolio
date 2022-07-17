@@ -11,6 +11,11 @@ public class TalkText : MonoBehaviour
     }
     private void Update()
     {
+        if(Manager.instance.camera_Manager.isGameClear == true)
+        {
+            interactText.text = "";
+            return;
+        }
         if (Manager.instance.playerStat_Manager.isPortal == true)
         {
             interactText.text = "이동하기 : G";

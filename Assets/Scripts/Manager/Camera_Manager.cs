@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 public class Camera_Manager : MonoBehaviour
@@ -39,6 +40,17 @@ public class Camera_Manager : MonoBehaviour
     float shakeIntensity;
 
     public bool isEvent = false;
+
+    [SerializeField] Image fadeImage;
+
+    [SerializeField] Transform clearCameraPos;
+    [SerializeField] Transform player;
+    [SerializeField] GameObject clearText;
+    [SerializeField] GameObject levUpText;
+    [SerializeField] GameObject inGameUI;
+    [SerializeField] GameObject playerWaepon;
+    public bool isGameClear = false;
+    public LayerMask clearLayer;
     private void Awake()
     {
         cam = Camera.main;
@@ -46,7 +58,30 @@ public class Camera_Manager : MonoBehaviour
         camOriginPosition=cam.transform.localPosition;
         camOriginRotation=cam.transform.localRotation;
     }
+    public IEnumerator ClearCamera()
+    {
+        inGameUI.SetActive(false);
+        playerWaepon.SetActive(false);
+        Manager.instance.sound_Manager.ChangeBGM(Manager.instance.sound_Manager.gameClearBGM);
+        Manager.instance.sound_Manager.bgmAudioSource.volume = 1f;
+        cam.transform.SetParent(player);
+        player.GetComponent<Animator>().SetTrigger("onClear");
+        cam.cullingMask = 0;
+        cam.cullingMask = clearLayer;
+        float currentTime = 0.0f;
+        float percent = 0.0f;
 
+        while (percent<1f)
+        {
+            if(levUpText.activeSelf==true) levUpText.SetActive(false);
+            currentTime +=Time.deltaTime;
+            percent = currentTime / 3.5f;
+            cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, clearCameraPos.localPosition,0.01f);
+            cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, clearCameraPos.localRotation, 0.01f);
+            yield return null;
+        }
+        clearText.SetActive(true);
+    }
     public IEnumerator BossInCamera(GameObject inCamera, Transform p_BossTransform, Vector3 p_BossAfterPos)
     {
         isEvent = true;
@@ -167,6 +202,7 @@ public class Camera_Manager : MonoBehaviour
     // ================================================================================================
     public IEnumerator MainCameraMove(Transform p_targetPosition)
     {
+        Manager.instance.playerStat_Manager.isMoveAble = false;
         isEvent = true;
 
         cam.transform.SetParent(p_targetPosition.parent);
@@ -194,10 +230,12 @@ public class Camera_Manager : MonoBehaviour
         cam.transform.localPosition=camOriginPosition;
         cam.transform.localRotation=camOriginRotation;
         isEvent = false;
+        Manager.instance.playerStat_Manager.isMoveAble = true;
     }
-
+    // NPC Camera
     public void ChangeCamera(GameObject p_onObject)
     {
+        StartCoroutine(FadeIn());
         cam.enabled = false;
         p_onObject.SetActive(true);
         playerObject.SetActive(false);
@@ -206,11 +244,12 @@ public class Camera_Manager : MonoBehaviour
 
     public void OnMainCamera(GameObject p_onObject)
     {
+        StartCoroutine(FadeIn());
         cam.enabled = true;
         p_onObject.SetActive(false);
         playerObject.SetActive(true);
     }
-
+    // ==============================================
     public void OnShakeCameraPosition(float p_shakeTime, float p_shakeIntensity)
     {
         shakeTime = p_shakeTime;
@@ -233,5 +272,27 @@ public class Camera_Manager : MonoBehaviour
         }
         cam.transform.localPosition = camOriginPosition;
         isEvent = false;
+    }
+
+    IEnumerator FadeIn()
+    {
+        float currentTime = 0.0f;
+        float percent = 0.0f;
+
+        fadeImage.gameObject.SetActive(true);
+
+        Color color=fadeImage.color;
+        color.a = 1f;
+        fadeImage.color = color;
+        while (percent < 1)
+        {
+            currentTime += Time.deltaTime;
+            percent = currentTime / 1f;
+            color = fadeImage.color;
+            color.a = Mathf.Lerp(color.a, 0f, 0.01f);
+            fadeImage.color = color;
+            yield return null;
+        }
+        fadeImage.gameObject.SetActive(false);
     }
 }

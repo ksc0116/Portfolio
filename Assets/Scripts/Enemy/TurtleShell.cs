@@ -243,7 +243,7 @@ public class TurtleShell : MonoBehaviour
 
         Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.enemyDamageClip);
 
-        damageTextMemoryPool.SpawnDamageText(transform.position,damage,1.2f);
+        damageTextMemoryPool.SpawnDamageText(transform.position,damage,1.2f,false);
 
         hpBar.gameObject.SetActive(true);
 

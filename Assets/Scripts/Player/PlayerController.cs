@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     public bool isMove=false;
     RaycastHit hit;
-
+    DamageTextMemoryPool damageTextMemoryPool;
     private void OnEnable()
     {
         attackCollider.enabled=false;
@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Awake()
     {
+        damageTextMemoryPool=GetComponent<DamageTextMemoryPool>();
         anim = GetComponentInChildren<Animator>();
         cam = Camera.main;
         playerNav = GetComponent<NavMeshAgent>();
@@ -58,7 +59,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // 클릭한 곳으로 이동하기
-        if (Input.GetMouseButton(1) && playerAnim.isAttack==false && EventSystem.current.IsPointerOverGameObject()==false && Manager.instance.playerStat_Manager.isMoveAble==true)
+        if (Input.GetMouseButton(1) && playerAnim.isAttack==false && EventSystem.current.IsPointerOverGameObject()==false && Manager.instance.playerStat_Manager.isMoveAble==true
+            && Manager.instance.playerStat_Manager.isDie==false)
         {
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity ,layerMask))
             {
@@ -73,7 +75,8 @@ public class PlayerController : MonoBehaviour
         LookMoveDirection();
 
         // 공격하기
-        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false && Manager.instance.equip_Manager.isWeaponEquip==true && Manager.instance.playerStat_Manager.isAttackAble==true)
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false && Manager.instance.equip_Manager.isWeaponEquip==true && Manager.instance.playerStat_Manager.isAttackAble==true
+            && Manager.instance.playerStat_Manager.isDie == false)
         {
             anim.SetTrigger("onAttack");
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit))
@@ -154,7 +157,7 @@ public class PlayerController : MonoBehaviour
             Vector3 from = new Vector3(anim.transform.position.x, 0, anim.transform.position.z);
 
             Quaternion rotation = Quaternion.LookRotation(to - from);
-            anim.transform.rotation = Quaternion.Slerp(anim.transform.rotation, rotation, 0.025f);
+            anim.transform.rotation = Quaternion.Slerp(anim.transform.rotation, rotation, 0.05f);
         }
     }
 
@@ -166,6 +169,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Manager.instance.playerStat_Manager.curHp-=damage;
+        damageTextMemoryPool.SpawnDamageText(transform.position, damage, 1.5f,true);
     }
     private void OnTriggerEnter(Collider other)
     {

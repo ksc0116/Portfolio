@@ -12,27 +12,29 @@ public class DamageText : MonoBehaviour
     float alphaSpeed = 2f;
 
     TextMeshPro textMesh;
-    Color color=Color.red;
 
+    Color color;
     private void Awake()
     {
         cam = Camera.main;
         textMesh = GetComponent<TextMeshPro>();
+        color = textMesh.color;
     }
 
     private void OnEnable()
     {
         color.a = 1f;
         
-        textMesh.color = color;
         transform.localScale = Vector3.zero;
     }
 
-    public void Init(MemoryPool p_pool)
+    public void Init(MemoryPool p_pool,Color p_color)
     {
         m_pool = p_pool;
         StartCoroutine(ColorChange());
         StartCoroutine(AutoDestroy());
+        color = p_color;
+        textMesh.color = color;
     }
 
     private void Update()

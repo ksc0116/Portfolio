@@ -26,6 +26,7 @@ public class Sound_Manager : MonoBehaviour
     public AudioClip bossBGM;
     public AudioClip mainMenuBGM;
     public AudioClip monsterSceneBGM;
+    public AudioClip gameClearBGM;
 
     private void Awake()
     {

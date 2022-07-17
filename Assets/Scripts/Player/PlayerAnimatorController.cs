@@ -10,9 +10,13 @@ public class PlayerAnimatorController : MonoBehaviour
     public BoxCollider skillCollider;
     public GameObject player;
 
+    NavMeshAgent playerNav;
+    Rigidbody playerRigid;
 
     private void OnEnable()
     {
+        playerNav = player.GetComponent<NavMeshAgent>();
+        playerRigid = player.GetComponent<Rigidbody>();
         attackCollider.enabled = false; 
         skillCollider.enabled = false; 
         Manager.instance.playerStat_Manager.isAttackAble = true;
@@ -21,23 +25,39 @@ public class PlayerAnimatorController : MonoBehaviour
     public void AttackStart()
     {
         isAttack = true;
+        Manager.instance.playerStat_Manager.isMoveAble = false;
     }
 
     public void AttackEnd()
     {
         isAttack = false;
+        Manager.instance.playerStat_Manager.isMoveAble = true;
     }
-
+    
     public void ActionOnOffAttackCollider()
     {
         StartCoroutine(OnOffAttackCollider());
     }
-
+   
+    
     IEnumerator OnOffAttackCollider()
     {
         attackCollider.enabled=true;
         yield return new WaitForSeconds(0.1f);
         attackCollider.enabled = false;
+    }
+    public void ThirdAttackEffect()
+    {
+        StartCoroutine(OnAttackEffect());
+    }
+    IEnumerator OnAttackEffect()
+    {
+        playerNav.enabled = false;
+        playerRigid.drag = 1f;
+        playerRigid.AddForce(transform.forward * 5f, ForceMode.Impulse);
+        yield return new WaitForSeconds(0.1f);
+        playerNav.enabled = true;
+        playerRigid.drag = 1000f;
     }
 
     public void OnSkillCollider()

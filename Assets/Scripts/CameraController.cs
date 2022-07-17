@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
+        if (Manager.instance.camera_Manager.isGameClear == true) return;
         if (Manager.instance.camera_Manager.isBossScene == true)
         {
             zoomMax = 20f;

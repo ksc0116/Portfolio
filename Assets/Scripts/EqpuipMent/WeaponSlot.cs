@@ -9,6 +9,11 @@ public class WeaponSlot : MonoBehaviour
     bool isFirst = false;
     private void Update()
     {
+        if (Manager.instance.camera_Manager.isGameClear == true)
+        {
+
+        }
+
         atkText.text = Manager.instance.playerStat_Manager.atk.ToString();
 
         if (transform.GetComponentInChildren<Item_Action>() == null && Manager.instance.inven_Manager.isDragging == false)

@@ -32,7 +32,8 @@ public class QuickSkillFrame : MonoBehaviour
     {
         qSkillUseMp.text = (Manager.instance.playerStat_Manager.qSkillUseMp).ToString();
         wSkillUseMp.text = (Manager.instance.playerStat_Manager.wSkillUseMp).ToString();
-        if (Input.GetKeyDown(KeyCode.Q) && (Manager.instance.playerStat_Manager.isAttackAble == true) && (isQ == false) && (Manager.instance.playerStat_Manager.curMP>0) && (Manager.instance.playerStat_Manager.curMP>=Manager.instance.playerStat_Manager.qSkillUseMp))
+        if (Input.GetKeyDown(KeyCode.Q) && (Manager.instance.playerStat_Manager.isAttackAble == true) && (isQ == false) && (Manager.instance.playerStat_Manager.curMP>0) && (Manager.instance.playerStat_Manager.curMP>=Manager.instance.playerStat_Manager.qSkillUseMp)
+            && Manager.instance.equip_Manager.isWeaponEquip == true)
         {
             // Q ½½·Ô
             Manager.instance.playerStat_Manager.isQSkill = true;
@@ -41,7 +42,8 @@ public class QuickSkillFrame : MonoBehaviour
             qCoolTimeImage.gameObject.SetActive(true);
             StartCoroutine(qCoolTimeStart());
         }
-        else if (Input.GetKeyDown(KeyCode.W) && (Manager.instance.playerStat_Manager.isAttackAble == true) && (isW == false) && (Manager.instance.playerStat_Manager.curMP > 0) && (Manager.instance.playerStat_Manager.curMP >= Manager.instance.playerStat_Manager.wSkillUseMp))
+        else if (Input.GetKeyDown(KeyCode.W) && (Manager.instance.playerStat_Manager.isAttackAble == true) && (isW == false) && (Manager.instance.playerStat_Manager.curMP > 0) && (Manager.instance.playerStat_Manager.curMP >= Manager.instance.playerStat_Manager.wSkillUseMp)
+            && Manager.instance.equip_Manager.isWeaponEquip == true)
         {
             // W ½½·Ô
             Manager.instance.playerStat_Manager.isWSkill = true;

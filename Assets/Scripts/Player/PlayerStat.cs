@@ -7,6 +7,8 @@ public class PlayerStat : MonoBehaviour
 {
     [SerializeField] GameObject levelUpText;
     [SerializeField] GameObject levelUpParticle;
+    [SerializeField] CapsuleCollider playerCollider;
+    [SerializeField] Animator playerAnim;
 
     public float playerGold = 200;
 
@@ -21,8 +23,8 @@ public class PlayerStat : MonoBehaviour
     public float maxExp = 100f;
     public float curExp = 0f;
 
-    public float atk=50f;
-    public float originAtk=50f;
+    public float atk=30f;
+    public float originAtk=30f;
     public float atk_Bonus = 0f;
 
     public float def = 30f;
@@ -44,8 +46,12 @@ public class PlayerStat : MonoBehaviour
     public bool isQSkill = false;
     public bool isWSkill = false;
 
+    [SerializeField] GameObject GameOverPanel;
+
+    public bool isDie = false;
     private void Update()
     {
+        if(curHp<=0) curHp=0;
         if (curExp >= maxExp)
         {
             Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.levelUpClip);
@@ -64,5 +70,23 @@ public class PlayerStat : MonoBehaviour
             curMP = maxMP;
             curExp = curExp - maxExp == 0 ? 0 : curExp - maxExp;
         }
+        if (curHp <= 0 && isDie==false)
+        {
+            isDie = true;
+            playerAnim.SetTrigger("onDie");
+            PlayerDie();
+        }
+        if (isDie == true)
+        {
+            playerCollider.enabled = false;
+        }
+        else if (isDie == false)
+        {
+            playerCollider.enabled = true;
+        }
+    }
+    void PlayerDie()
+    {
+        GameOverPanel.SetActive(true); 
     }
 }

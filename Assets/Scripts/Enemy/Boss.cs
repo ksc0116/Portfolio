@@ -10,8 +10,10 @@ public class Boss : MonoBehaviour
     [SerializeField] GameObject playerStunObj;
     [SerializeField] GameObject portal;
     [SerializeField] TextMeshProUGUI hpPercent;
+    [SerializeField] TextMeshProUGUI hpCntText;
     [SerializeField] Image hpBarImage;
     [SerializeField] Image hpBarImage_Bg;
+    [SerializeField] Image hpBarLastBack;
     [SerializeField] GameObject throwPrefab;
     [SerializeField] Transform spawnPoint;
     [SerializeField] GameObject dangerRange;
@@ -39,11 +41,17 @@ public class Boss : MonoBehaviour
     float lastPattern = 0f;
     int patternIndex = 0;
     public float curHP = 0f;
-    float maxHP = 200f;
+    float maxHP = 300f;
     SkinnedMeshRenderer skinnedMeshRenderer;
     bool isDie = false;
+    int hpBarIndex;
+    int hpCnt;
     private void Awake()
     {
+        hpBarLastBack.color = Color.green;
+        hpBarIndex = (int)maxHP-100;
+        hpCnt = hpBarIndex / 100;
+        hpCntText.text=$"x{hpCnt}";
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         curHP = maxHP;
         bodyCollider=GetComponent<CapsuleCollider>();
@@ -55,9 +63,26 @@ public class Boss : MonoBehaviour
     {
         anim.SetBool("isSkill", isSkill);
 
-        hpBarImage.transform.localScale = new Vector3((curHP / maxHP) < 0 ? 0 : (curHP / maxHP), 1, 1);
-        hpBarImage_Bg.transform.localScale = Vector3.Lerp(hpBarImage_Bg.transform.localScale, new Vector3((curHP / maxHP) < 0 ? 0 : (curHP / maxHP), 1, 1), 3f * Time.deltaTime);
-
+        if((curHP - hpBarIndex < 0) && curHP>=0)
+        {
+            hpCnt--;
+            hpCntText.text = $"x{hpCnt}";
+            hpBarIndex -= 100;
+            hpBarImage.transform.localScale = Vector3.one;
+            hpBarImage_Bg.transform.localScale = Vector3.one;
+            if(hpBarIndex<=100)
+            {
+                hpBarImage.color = Color.green;
+                hpBarLastBack.color = Color.blue;
+            }
+            if (hpBarIndex <=0)
+            {
+                hpBarImage.color= Color.blue;
+                hpBarLastBack.color = Color.black;
+            }
+        }
+        hpBarImage.transform.localScale = new Vector3(curHP<=0 ? 0 :  ((curHP - hpBarIndex) / 100), 1, 1);
+        hpBarImage_Bg.transform.localScale = Vector3.Lerp(hpBarImage_Bg.transform.localScale, new Vector3(curHP <= 0 ? 0 : ((curHP - hpBarIndex) / 100), 1, 1), 5f * Time.deltaTime);
 
         if (Manager.instance.camera_Manager.isBossMove == true && isDie==false)
         {

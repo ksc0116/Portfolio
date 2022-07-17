@@ -180,7 +180,7 @@ public class Beetel : MonoBehaviour
 
         hpBar.gameObject.SetActive(true);
         curHp-=damage;
-        damageTextMemoryPool.SpawnDamageText(transform.position,damage,1.8f);
+        damageTextMemoryPool.SpawnDamageText(transform.position,damage,1.8f,false);
         StartCoroutine(ChangeColor());
         if(curHp <= 0)
         {

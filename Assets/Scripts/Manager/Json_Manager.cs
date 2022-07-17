@@ -30,8 +30,8 @@ public class Json_Manager : MonoBehaviour
         public int curLev = 1;
         public float maxHp = 100f;
         public float maxMp = 100f;
-        public float atk = 50f;
-        public float originAtk = 50f;
+        public float atk = 30f;
+        public float originAtk = 30f;
         public int qSkillDamage = 50;
         public int wSkillDamage = 30;
         public float qSkillUseMp = 10f;
@@ -170,6 +170,12 @@ public class Json_Manager : MonoBehaviour
     }
     public void JsonDataLoad()
     {
+        if (PlayerPrefs.HasKey("jsonStr") == false)
+        {
+            JsonDataReset();
+            return;
+        }
+
         jsonStr = PlayerPrefs.GetString("jsonStr");
         tempClass = JsonUtility.FromJson<TempClass>(jsonStr);
 

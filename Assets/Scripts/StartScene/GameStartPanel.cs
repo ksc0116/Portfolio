@@ -13,9 +13,12 @@ public class GameStartPanel : MonoBehaviour
     [SerializeField] Image  fadeImage;
     [SerializeField] GameObject mainMenuPanel;
     [SerializeField] GameObject panelCamera;
+    [SerializeField] Animator playerAnim;
     public void ContinueButton()
     {
         Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.buttonUIClip);
+        playerAnim.SetTrigger("onRetry");
+        Manager.instance.playerStat_Manager.isDie = false;
         inGameUI.SetActive(true);
         optionExitInGame.SetActive(true);
         fadeImage.gameObject.SetActive(true);
@@ -27,6 +30,8 @@ public class GameStartPanel : MonoBehaviour
     public void NewButton()
     {
         Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.buttonUIClip);
+        Manager.instance.playerStat_Manager.isDie = false;
+        playerAnim.SetTrigger("onRetry");
         inGameUI.SetActive(true);
         optionExitInGame.SetActive(true);
         fadeImage.gameObject.SetActive(true);
