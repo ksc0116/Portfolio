@@ -26,5 +26,6 @@ public class MainMenuPanel : MonoBehaviour
     public void ExitButton()
     {
         gameObject.SetActive(false);
+        Application.Quit(); 
     }
 }
