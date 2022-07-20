@@ -29,12 +29,14 @@ public class FadeImage : MonoBehaviour
         float currentTime = 0.0f;
         float percent = 0.0f;
 
-        while (percent < 1)
+        Color color = fadeImage.color;
+
+        while (color.a >0.01f)
         {
             currentTime += Time.deltaTime;
             percent = currentTime / fadeTime;
-            Color color = fadeImage.color;
-            color.a = Mathf.Lerp(color.a, 0f, 0.01f); 
+            color = fadeImage.color;
+            color.a = Mathf.Lerp(color.a, 0f, 0.03f); 
             fadeImage.color = color;
             yield return null;
         }
@@ -45,12 +47,14 @@ public class FadeImage : MonoBehaviour
         float currentTime = 0.0f;
         float percent = 0.0f;
 
-        while (percent < 1)
+        Color color = fadeImage.color;
+
+        while (color.a < 0.99f)
         {
             currentTime += Time.deltaTime;
             percent = currentTime / fadeTime;
-            Color color = fadeImage.color;
-            color.a = Mathf.Lerp(color.a, 1f, 0.01f);
+            color = fadeImage.color;
+            color.a = Mathf.Lerp(color.a, 1f, 0.03f);
             fadeImage.color = color;
             yield return null;
         }

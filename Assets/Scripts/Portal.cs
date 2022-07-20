@@ -21,7 +21,6 @@ public class Portal : MonoBehaviour
                 Manager.instance.playerStat_Manager.isPortal = false;
                 interactText.gameObject.SetActive(false);
                 other.transform.position = targetPos.position;
-                Debug.Log(other.transform.position);
                 other.GetComponent<NavMeshAgent>().enabled = true;
                 Manager.instance.camera_Manager.isBossScene = false;
             }

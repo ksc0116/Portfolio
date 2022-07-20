@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using TMPro;
 
 public class Camera_Manager : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class Camera_Manager : MonoBehaviour
     [SerializeField] GameObject levUpText;
     [SerializeField] GameObject inGameUI;
     [SerializeField] GameObject playerWaepon;
+
     public bool isGameClear = false;
     public LayerMask clearLayer;
     private void Awake()
@@ -75,7 +77,7 @@ public class Camera_Manager : MonoBehaviour
         {
             if(levUpText.activeSelf==true) levUpText.SetActive(false);
             currentTime +=Time.deltaTime;
-            percent = currentTime / 3.5f;
+            percent = currentTime / 7f;
             cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, clearCameraPos.localPosition,0.01f);
             cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, clearCameraPos.localRotation, 0.01f);
             yield return null;
@@ -93,14 +95,18 @@ public class Camera_Manager : MonoBehaviour
         float power = 10f;
 
         Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.bossDownClip);
+        float x = 0.0f;
+        float y = 0.0f;
+        float z = 0.0f;
 
-        while (Vector3.Distance(p_BossTransform.position, p_BossAfterPos) > 0.1f)
+
+        while (Vector3.Distance(p_BossTransform.position, p_BossAfterPos) > 2f)
         {
             if (isTrigger == false)
             {
-                float x = Random.Range(-1f, 1f);
-                float y = Random.Range(-1f, 1f);
-                float z = Random.Range(-1f, 1f);
+                x = Random.Range(-1f, 1f);
+                y = Random.Range(-1f, 1f);
+                z = Random.Range(-1f, 1f);
                 inCamera.transform.rotation = Quaternion.Euler(startRotation + new Vector3(x, y, z) * 0.1f * power);
             }
             else if(isTrigger == true)
@@ -117,6 +123,7 @@ public class Camera_Manager : MonoBehaviour
 
             yield return null;
         }
+        p_BossTransform.position=p_BossAfterPos;
         Manager.instance.sound_Manager.sfxAudioSource.Stop();
         Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.bossSkillClip);
         isArrive = true;
@@ -157,7 +164,7 @@ public class Camera_Manager : MonoBehaviour
     {
         isEvent = true;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.8f);
         float currentTime = 0.0f;
         float percent = 0.0f;
 
@@ -167,8 +174,8 @@ public class Camera_Manager : MonoBehaviour
             currentTime += Time.deltaTime;
             percent = currentTime / moveTime;
 
-            cam.transform.position = Vector3.Lerp(cam.transform.position, camOriginParent.position + forwardPosition, 0.1f);
-            cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, Quaternion.Euler(forwardRotation), 0.1f);
+            cam.transform.position = Vector3.Lerp(cam.transform.position, camOriginParent.position + forwardPosition, 1f);
+            cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, Quaternion.Euler(forwardRotation), 1f);
 
             yield return null;
         }

@@ -72,14 +72,12 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void MoveStop()
     {
-        Debug.Log("Stop");
         player.GetComponent<NavMeshAgent>().ResetPath();
         Manager.instance.playerStat_Manager.isMoveAble = false;
         Manager.instance.playerStat_Manager.isAttackAble = false;
     }
     public void MoveAble()
     {
-        Debug.Log("Able");
         Manager.instance.playerStat_Manager.isMoveAble = true;
         Manager.instance.playerStat_Manager.isAttackAble = true;
     }

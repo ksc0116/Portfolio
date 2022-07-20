@@ -165,7 +165,6 @@ public class Json_Manager : MonoBehaviour
         tempClass.curBGM = Manager.instance.sound_Manager.bgmAudioSource.clip;
 
         jsonStr = JsonUtility.ToJson(tempClass);
-        Debug.Log(jsonStr);
         PlayerPrefs.SetString("jsonStr", jsonStr);
     }
     public void JsonDataLoad()
@@ -195,7 +194,6 @@ public class Json_Manager : MonoBehaviour
             itemCountInven[i] = tempClass.itemCountInven[i];
             invenSlots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo = tempClass.invenSlots_itemInfo[i];
             invenSlots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo.Cnt =itemCountInven[i];
-            Debug.Log($"인벤 :{i}  { invenSlots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo.Cnt}");
             invenSlots[i].GetChild(0).GetComponent<Image>().sprite = invenSlots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo.itemSprite;
             invenSlots[i].GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = invenSlots[i].GetChild(0).GetComponent<Item_Action>().m_itemInfo.Cnt.ToString();
             invenSlots[i].GetChild(0).gameObject.SetActive(true);
@@ -236,7 +234,6 @@ public class Json_Manager : MonoBehaviour
             }
 
             itemCountEquip[i] = tempClass.itemCountEquip[i];
-            Debug.Log(itemCountEquip[i]);
             equipSlots[i].GetChild(1).GetComponent<Item_Action>().m_itemInfo = tempClass.equipSlots_itemInfo[i];
             equipSlots[i].GetChild(1).GetComponent<Item_Action>().m_itemInfo.Cnt = itemCountEquip[i];
             equipSlots[i].GetChild(1).GetComponent<Image>().sprite = equipSlots[i].GetChild(1).GetComponent<Item_Action>().m_itemInfo.itemSprite;
@@ -282,28 +279,5 @@ public class Json_Manager : MonoBehaviour
         TempClass tempClasee2 = new TempClass();
         jsonStr = JsonUtility.ToJson(tempClasee2);
         PlayerPrefs.SetString("jsonStr", jsonStr);
-    }
-    private void Update()
-    {
-        // 정보 저장
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Debug.Log("저장");
-            JsonDataSave();
-        }
-
-        // 정보 로드
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Debug.Log("로드");
-            JsonDataLoad();
-        }
-
-        // 정보 리셋
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("저장");
-            JsonDataReset();
-        }
     }
 }

@@ -30,6 +30,8 @@ public class Sound_Manager : MonoBehaviour
 
     private void Awake()
     {
+        if (PlayerPrefs.HasKey("BGM") == false) bgmAudioSource.volume = 1f;
+        if (PlayerPrefs.HasKey("SFX") == false) sfxAudioSource.volume = 1f;
         bgmAudioSource.volume = PlayerPrefs.GetFloat("BGM");
         sfxAudioSource.volume = PlayerPrefs.GetFloat("SFX");
     }

@@ -10,8 +10,7 @@ public class TurtleShellSpawner : MonoBehaviour
     public GameObject expDropPrefab;
     public Transform[] spawnPoint;
     public Transform expOriginParent;
-    //public DamageTextMemoryPool damageTextMemoryPool;
-    private void Awake()
+    public void Spawn()
     {
         for(int i = 0; i < spawnPoint.Length; i++)
         {

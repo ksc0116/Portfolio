@@ -91,7 +91,6 @@ public class Boss : MonoBehaviour
             {
                 lastPattern = 0.0f;
                 patternIndex = Random.Range(0, 100);
-                Debug.Log(patternIndex);
                 if (patternIndex < 35) StartCoroutine("JumpAttack");
                 else if (patternIndex > 35 && patternIndex < 65) StartCoroutine("PursuitAttack");
                 else anim.SetTrigger("onThrow");
@@ -295,7 +294,6 @@ public class Boss : MonoBehaviour
         int hpText = (int)(curHP * 100 / maxHP) < 0 ? 0 : (int)(curHP * 100 / maxHP);
         hpPercent.text = $"{hpText}%";
 
-        Debug.Log(curHP);
         StartCoroutine( ChangeColor() );
         if (curHP <= 0)
         {

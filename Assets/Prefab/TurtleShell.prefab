@@ -812,6 +812,9 @@ MonoBehaviour:
   atk: 15
   turtleState: -1
   skinnedMeshRenderer: {fileID: 5905148048224278800}
+  layer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!195 &5770433838268295446
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -104,7 +104,6 @@ public class Beetel : MonoBehaviour
             {
                 lastAttackTime = Time.time;
 
-                Debug.Log("АјАн");
                 anim.SetTrigger("onAttack");
             }
         }

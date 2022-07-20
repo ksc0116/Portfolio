@@ -48,7 +48,6 @@ public class MovingPlatform : MonoBehaviour
         {
             isTrigger = true;
             playerTransform=other.transform;
-            Debug.Log(other.name);
             playerTransform.SetParent(transform);
             touchEffect.SetParent(transform);
         }

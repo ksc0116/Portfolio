@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MonsterScene : MonoBehaviour
 {
+    [SerializeField] TurtleShellSpawner spawner;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -11,6 +12,7 @@ public class MonsterScene : MonoBehaviour
         {
             if (Manager.instance.sound_Manager.bgmAudioSource.clip == Manager.instance.sound_Manager.monsterSceneBGM) return;
             Manager.instance.sound_Manager.ChangeBGM(Manager.instance.sound_Manager.monsterSceneBGM);
+            spawner.Spawn();
         }
     }
 }

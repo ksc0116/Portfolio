@@ -25,7 +25,7 @@ public class TurtleShell : MonoBehaviour
     float attackRate = 1f;
     float lastAttackTime = 0;
 
-    float m_exp = 10f;
+    float m_exp = 5f;
 
     GameObject m_ExpDropPrefab;
 
@@ -39,6 +39,7 @@ public class TurtleShell : MonoBehaviour
     DamageTextMemoryPool damageTextMemoryPool;
 
     DropItemMemoryPool dropItemMemoryPool;
+    public LayerMask layer;
     private void Awake()
     {
         dropItemMemoryPool=GetComponent<DropItemMemoryPool>();
@@ -64,7 +65,13 @@ public class TurtleShell : MonoBehaviour
 
     private void Update()
     {
-        Quaternion q_hp = Quaternion.LookRotation(hpBar.position - cam.transform.position);
+        Debug.DrawRay(transform.position, transform.forward*1f,Color.red);
+        if(Physics.Raycast(transform.position, transform.forward, 1f,layer))
+        {
+            ChangeState(TurtleState.Wander);
+        }
+        
+       Quaternion q_hp = Quaternion.LookRotation(hpBar.position - cam.transform.position);
         Vector3 hp_Angle = Quaternion.RotateTowards(hpBar.rotation, q_hp, 1000).eulerAngles;
         hpBar.rotation = Quaternion.Euler(hp_Angle.x, hp_Angle.y, 0);
         hpSlider.value = curHp / maxHp;
