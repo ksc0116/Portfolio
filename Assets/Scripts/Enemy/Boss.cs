@@ -97,16 +97,12 @@ public class Boss : MonoBehaviour
             }
         }
 
-
-        // 움직이기
         if (Manager.instance.camera_Manager.isBossMove == true && isSkill==false && isDie==false)
         {
             Move();
             LookTarget();
         }
 
-
-        // 제자리 점프 공격할 때 만
         if (isStun == true && isDie == false)
         {
             if (rigid.velocity.y < 0)
@@ -124,9 +120,6 @@ public class Boss : MonoBehaviour
             }
         }
 
-
-        // =========================================================
-
         if (Input.GetKeyDown(KeyCode.L))
         {
             StartCoroutine( JumpAttack() );
@@ -136,7 +129,6 @@ public class Boss : MonoBehaviour
             StartCoroutine( PursuitAttack() );
         }
     }
-
     void Move()
     {
         Vector3 moveDir = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);

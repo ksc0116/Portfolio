@@ -21,23 +21,17 @@ public class QuickSlotPanel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            // 1번 슬롯
             if (quickSlots[0].GetChild(1).gameObject.activeSelf == false) return;
-            // 슬롯에 무언가 있으면
             CheckItem(quickSlots[0]);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            // 2번 슬롯
             if (quickSlots[1].GetChild(1).gameObject.activeSelf == false) return;
-            // 슬롯에 무언가 있으면
             CheckItem(quickSlots[1]);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            // 3번 슬롯
             if (quickSlots[2].GetChild(1).gameObject.activeSelf == false) return;
-            // 슬롯에 무언가 있으면
             CheckItem(quickSlots[2]);
         }
     }

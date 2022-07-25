@@ -10,11 +10,11 @@ public class Beetel : MonoBehaviour
     Camera cam;
 
     public GameObject expDropPrefab;
-
     public Transform target;
     public Transform[] patrolPositions;
     public int wayIndex = 0;
     public float moveSpeed = 1f;
+
     float pursuitRange = 2.5f;
     float attackRange = 1.5f;
     bool isPursuit=false;
@@ -33,8 +33,8 @@ public class Beetel : MonoBehaviour
     SkinnedMeshRenderer skinnedMeshRenderer;
 
     ExpDropMemoryPool m_pool;
-    DropItemMemoryPool dropItemMemoryPool;
     public Transform expOriginParent;
+    DropItemMemoryPool dropItemMemoryPool;
 
     DamageTextMemoryPool damageTextMemoryPool;
     private void Awake()

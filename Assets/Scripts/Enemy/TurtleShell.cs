@@ -219,9 +219,6 @@ public class TurtleShell : MonoBehaviour
         Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, navMeshAgent.destination - transform.position);
 
-        /*        Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(transform.position, targetRecognitionRange);*/
-
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, pursuitLimitRange);
 

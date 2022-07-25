@@ -58,10 +58,8 @@ public class Item_Action : MonoBehaviour, IBeginDragHandler, IEndDragHandler,IDr
             return;
         }
 
-        //현재 선택된 이미지가 웨폰일 때
         if (m_itemInfo.itemKind == ItemKind.Weapon)
         {
-            // Swap 안됨
             if((Manager.instance.inven_Manager.curMousePosition== Manager.instance.equip_Manager.equipSlot[0]) ||
                 Manager.instance.inven_Manager.curMousePosition == Manager.instance.equip_Manager.equipSlot[1])
             {
@@ -94,10 +92,8 @@ public class Item_Action : MonoBehaviour, IBeginDragHandler, IEndDragHandler,IDr
                 return;
             }
         }
-        // 현재 선택된 이미지가 포션일 때
         else if (m_itemInfo.itemKind == ItemKind.Potion)
         {
-            // 장비창이면 리턴
             if (Manager.instance.inven_Manager.curMousePosition.GetComponent<Item_Drop>().inEquip == true)
             {
                 transform.SetParent(Manager.instance.inven_Manager.curParent);
@@ -127,7 +123,6 @@ public class Item_Action : MonoBehaviour, IBeginDragHandler, IEndDragHandler,IDr
         transform.SetParent(Manager.instance.inven_Manager.curMousePosition);
         transform.localPosition= Vector3.zero;
 
-        // 퀵슬롯 정보 저장
         if(Manager.instance.inven_Manager.curMousePosition.GetComponent<Item_Drop>().inQuick == true)
         {
             Manager.instance.quickSlot_Manager.quickSlots[Manager.instance.inven_Manager.curMousePosition.GetComponent<Item_Drop>().slotIndex].GetChild(1).GetComponent<Item_Action>().m_itemInfo = m_itemInfo;
@@ -139,7 +134,6 @@ public class Item_Action : MonoBehaviour, IBeginDragHandler, IEndDragHandler,IDr
             Manager.instance.equipSlot_Manager.equipSlots[Manager.instance.inven_Manager.curMousePosition.GetComponent<Item_Drop>().slotIndex].GetChild(1).GetComponent<Item_Action>().m_itemInfo = m_itemInfo;
         }
 
-        // 인벤슬롯 정보 저장
         if (Manager.instance.inven_Manager.curMousePosition.GetComponent<Item_Drop>().inInven == true)
         {
             Manager.instance.invenSlot_Manager.invenSlots[Manager.instance.inven_Manager.curMousePosition.GetComponent<Item_Drop>().slotIndex].GetChild(0).GetComponent<Item_Action>().m_itemInfo = m_itemInfo;

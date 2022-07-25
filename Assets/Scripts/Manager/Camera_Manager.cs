@@ -205,8 +205,6 @@ public class Camera_Manager : MonoBehaviour
         cam.transform.localRotation = camOriginRotation;
         isEvent = false;
     }
-
-    // ================================================================================================
     public IEnumerator MainCameraMove(Transform p_targetPosition)
     {
         Manager.instance.playerStat_Manager.isMoveAble = false;
@@ -239,7 +237,6 @@ public class Camera_Manager : MonoBehaviour
         isEvent = false;
         Manager.instance.playerStat_Manager.isMoveAble = true;
     }
-    // NPC Camera
     public void ChangeCamera(GameObject p_onObject)
     {
         StartCoroutine(FadeIn());
@@ -256,7 +253,6 @@ public class Camera_Manager : MonoBehaviour
         p_onObject.SetActive(false);
         playerObject.SetActive(true);
     }
-    // ==============================================
     public void OnShakeCameraPosition(float p_shakeTime, float p_shakeIntensity)
     {
         shakeTime = p_shakeTime;

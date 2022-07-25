@@ -23,15 +23,12 @@ public class Disable_Manager : MonoBehaviour
 
     public IEnumerator GoDownObject(Transform selectPosition,Transform p_targetPos, float p_downSpeed,float p_downTime)
     {
-        //Manager.instance.camera_Manager.isEvent = true;
         Transform particlePosition = selectPosition;
 
         Manager.instance.sound_Manager.PlaySound(Manager.instance.sound_Manager.rockDownClip);
 
 
         StartCoroutine(CameraShake());
-
-        //Manager.instance.camera_Manager.OnShakeCameraPosition(2.8f, 0.1f);
 
         float time = 0.5f;
 

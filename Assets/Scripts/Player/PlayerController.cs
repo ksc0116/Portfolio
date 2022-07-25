@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
             playerWeapon.SetActive(false);
         }
 
-        // 클릭한 곳으로 이동하기
         if (Input.GetMouseButton(1) && playerAnim.isAttack==false && EventSystem.current.IsPointerOverGameObject()==false && Manager.instance.playerStat_Manager.isMoveAble==true
             && Manager.instance.playerStat_Manager.isDie==false)
         {
@@ -71,37 +70,30 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // 이동방향 바라보기 (이동중일 때)
         LookMoveDirection();
 
-        // 공격하기
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false && Manager.instance.equip_Manager.isWeaponEquip==true && Manager.instance.playerStat_Manager.isAttackAble==true
             && Manager.instance.playerStat_Manager.isDie == false)
         {
             anim.SetTrigger("onAttack");
             if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                // 공격방향 바라보기 (공격중일 때)
                 LookAttackDirection(hit.point);
             }
         }
 
-        // 도착하면 isMove=false
         PlayerArrive();
 
-        // 인벤토리 OnOff
         if (Input.GetKeyDown(KeyCode.I))
         {
             OnOffFrame(invenFrame);
         }
 
-        // 장비창 & 스텟창
         if (Input.GetKeyDown(KeyCode.P))
         {
             OnOffFrame(statAndEquipFrame);
         }
 
-        // 일시정지창 OnOff
         if (Input.GetKeyDown(KeyCode.Escape) && mainMenuPanel.activeSelf==false)
         {
             OnOffFrame(pausePanel);
@@ -109,7 +101,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 목적지에 도착하면 isMove=flase
     void PlayerArrive()
     {
         if (playerNav.velocity.magnitude <= 0.01f)
@@ -124,7 +115,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 공격중일 때 공격방향 바라보기
     void LookAttackDirection(Vector3 dest)
     {
         playerNav.SetDestination(transform.position);
@@ -140,7 +130,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    // 이동 목적지 정하기
     void SetDestination(Vector3 dest)
     {
         playerNav.SetDestination(dest);
@@ -148,7 +137,6 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isMove",isMove);
     }
 
-    // 움직일 때 움직이는 방향 바라보기
     void LookMoveDirection()
     {
         if (isMove==true)

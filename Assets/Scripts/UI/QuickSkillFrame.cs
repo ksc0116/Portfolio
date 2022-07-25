@@ -7,7 +7,6 @@ using TMPro;
 
 public class QuickSkillFrame : MonoBehaviour
 {
-    //[SerializeField] Material dashMat;
     [SerializeField] TextMeshProUGUI qSkillUseMp;
     [SerializeField] TextMeshProUGUI wSkillUseMp;
 
@@ -35,7 +34,6 @@ public class QuickSkillFrame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && (Manager.instance.playerStat_Manager.isAttackAble == true) && (isQ == false) && (Manager.instance.playerStat_Manager.curMP>0) && (Manager.instance.playerStat_Manager.curMP>=Manager.instance.playerStat_Manager.qSkillUseMp)
             && Manager.instance.equip_Manager.isWeaponEquip == true)
         {
-            // Q ½½·Ô
             Manager.instance.playerStat_Manager.isQSkill = true;
             playerAnim.SetTrigger("onQ");
             Manager.instance.playerStat_Manager.curMP -= Manager.instance.playerStat_Manager.qSkillUseMp;
@@ -45,7 +43,6 @@ public class QuickSkillFrame : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.W) && (Manager.instance.playerStat_Manager.isAttackAble == true) && (isW == false) && (Manager.instance.playerStat_Manager.curMP > 0) && (Manager.instance.playerStat_Manager.curMP >= Manager.instance.playerStat_Manager.wSkillUseMp)
             && Manager.instance.equip_Manager.isWeaponEquip == true)
         {
-            // W ½½·Ô
             Manager.instance.playerStat_Manager.isWSkill = true;
             playerAnim.SetTrigger("onW");
             Manager.instance.playerStat_Manager.curMP -= Manager.instance.playerStat_Manager.wSkillUseMp;
@@ -54,13 +51,11 @@ public class QuickSkillFrame : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.E) && (isE==false) && (Manager.instance.playerStat_Manager.curMP > 0) && (Manager.instance.playerStat_Manager.curMP >= Manager.instance.playerStat_Manager.eSkillUseMp))
         {
-            // E ½½·Ô
             Manager.instance.playerStat_Manager.curMP -= Manager.instance.playerStat_Manager.eSkillUseMp;
             eCoolTimeImage.gameObject.SetActive(true);
             StartCoroutine(eCoolTimeStart());
         }
     }
-    // È¸Àü °ø°Ý
     IEnumerator qCoolTimeStart()
     {
         isQ = true;
@@ -90,7 +85,6 @@ public class QuickSkillFrame : MonoBehaviour
         wCoolTimeImage.gameObject.SetActive(false);
     }
 
-    // ´ë½¬
     IEnumerator eCoolTimeStart()
     {
         StartCoroutine(Dash());
